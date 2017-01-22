@@ -42,11 +42,40 @@
 
 
 	<!-- Default, run this -->
-	<target name="main" depends="clean, compile, jar, pmd" />
+	<target name="main" depends="clean, checkout, compile, jar, pmd" />
 
 
 	<path id="compile.class.pathtest">
 		<pathelement location="lib/checkstyle-7.4-all.jar" />
 	</path>
+
+	<target name="checkout">
+<macrodef name = "git">
+    <attribute name = "command" />
+    <attribute name = "dir" default = "" />
+    <element name = "args" optional = "true" />
+    <sequential>
+        <echo message = "git @{command}" />
+        <exec executable = "git" dir = "@{dir}">
+            <arg value = "@{command}" />
+            <args/>
+        </exec>
+    </sequential>
+</macrodef>
+
+<macrodef name = "git-clone-pull">
+    <attribute name = "repository" />
+    <attribute name = "dest" />
+    <sequential>
+        <git command = "clone">
+            <args>
+                <arg value = "https://github.com/akmaharshi/antSudoku.git" />
+                <arg value = "." />
+            </args>
+        </git>
+    </sequential>
+</macrodef>
+		
+</target>
 
 </project>
